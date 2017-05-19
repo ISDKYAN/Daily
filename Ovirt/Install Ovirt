@@ -1,0 +1,156 @@
+#yum list
+列出現階段所有套件
+
+#wget http://resources.ovirt.org/pub/yum-repo/ovirt-release40.rpm
+至oVirt官網取得 oVirt4.0 rpm軟體包
+
+#yum install ovirt-release40.rpm -y
+安裝 oVirt4.0 rpm軟體包
+
+# yum install -y ovirt-engine 
+安裝 oVirt4.0 engine
+
+# hostnamectl set-hostname {HOSTNAME} 
+更改 Hostnamehos
+
+# vim /etc/hosts 
+設定本機Host檔案
+192.168.XX.XX {HOSTNAME}
+
+# engine-setup
+
+=========================================================================
+Host fully qualified DNS name of this server [{HOSTNAME}]: {HOSTNAME}
+[WARNING] Failed to resolve ovirt.m10413012.com using DNS, it can be resolved only locally
+                  Setup can automatically configure the firewall on this system.
+                  Note: automatic configuration of the firewall may overwrite current settings.
+                  Do you want Setup to configure the firewall? (Yes, No) [Yes]: No
+         
+          --== DATABASE CONFIGURATION ==--
+         
+                  Where is the DWH database located? (Local, Remote) [Local]: Local
+                   Setup can configure the local postgresql server automatically for the DWH to run. This may conflict with existing applications.
+                  Would you like Setup to automatically configure postgresql and create DWH database, or prefer to perform that manually? (Automatic, Manual) [Automatic]: Automatic
+                  Where is the Engine database located? (Local, Remote) [Local]: Local
+                  Setup can configure the local postgresql server automatically for the engine to run. This may conflict with existing applications.
+                  Would you like Setup to automatically configure postgresql and create Engine database, or prefer to perform that manually? (Automatic, Manual) [Automatic]:Automatic 
+         
+          --== OVIRT ENGINE CONFIGURATION ==--
+         
+                  Engine admin password: (自行定義密碼)
+                  Confirm engine admin password: (自行定義密碼)
+[WARNING] Password is weak: it is too simplistic/systematic
+                  Use weak password? (Yes, No) [No]: Yes(密碼強度太弱,才會跳出來的選項)
+
+         
+          --== STORAGE CONFIGURATION ==--
+         
+                  Default SAN wipe after delete (Yes, No) [No]: No
+         
+          --== PKI CONFIGURATION ==--
+         
+                  Organization name for certificate [{HOSTNAME}]: {HOSTNAME}
+         
+          --== APACHE CONFIGURATION ==--
+         
+                  Setup can configure the default page of the web server to present the application home page. This may conflict with existing applications.
+                  Do you wish to set the application as the default page of the web server? (Yes, No) [Yes]: Yes
+                  Setup can configure apache to use SSL using a certificate issued from the internal CA.
+                  Do you wish Setup to configure that, or prefer to perform that manually? (Automatic, Manual) [Automatic]: Automatic
+         
+          --== SYSTEM CONFIGURATION ==--
+         
+                  --== SYSTEM CONFIGURATION ==--
+         
+          Configure an NFS share on this server to be used as an ISO Domain? (Yes, No) [No]: Yes
+          Local ISO domain path [/var/lib/exports/iso]: /var/lib/exports/iso
+
+          Please provide the ACL for the Local ISO domain.
+          See the exports(5) manpage for the format.
+          Examples:
+          - To allow access for host1, host2 and host3, input: host1(rw) host2(rw) host3(rw)
+          - To allow access to the entire Internet, input: *(rw)
+         
+          For more information, see: http://www.ovirt.org/Troubleshooting_NFS_Storage_Issues
+         
+          Local ISO domain ACL: *(rw)   
+          Local ISO domain name [ISO_DOMAIN]: iso
+
+         
+          --== MISC CONFIGURATION ==--
+         
+                  Please choose Data Warehouse sampling scale:
+                  (1) Basic
+                  (2) Full
+                  (1, 2)[1]: 1
+         
+          --== END OF CONFIGURATION ==--
+         
+[ INFO  ] Stage: Setup validation
+[WARNING] Warning: Not enough memory is available on the host. Minimum requirement is 4096MB, and 16384MB is recommended.
+          Do you want Setup to continue, with amount of memory less than recommended? (Yes, No) [No]: Yes
+         
+          --== CONFIGURATION PREVIEW ==--
+         
+          Application mode                        : both
+          Default SAN wipe after delete     : False
+          Update Firewall                         : False
+          Host FQDN                               : {HOSTNAME}
+          Engine database secured connection      : False
+          Engine database host                    : localhost
+          Engine database user name               : engine
+          Engine database name                    : engine
+          Engine database port                    : 5432
+          Engine database host name validation    : False
+          DWH database secured connection         : False
+          DWH database host                       : localhost
+          DWH database user name                  : ovirt_engine_history
+          DWH database name                       : ovirt_engine_history
+          DWH database port                       : 5432
+          DWH database host name validation       : False
+          Engine installation                     : True
+          PKI organization                        : m10413012.com
+          Configure local Engine database         : True
+          Set application as default page         : True
+          Configure Apache SSL                    : True
+          DWH installation                        : True
+          Configure local DWH database            : True
+          Engine Host FQDN                        : ovirt.m10413012.com
+          Configure Image I/O Proxy               : True
+          Configure VMConsole Proxy               : True
+          Configure WebSocket Proxy               : True
+         
+          Please confirm installation settings (OK, Cancel) [OK]: OK
+===========================================================================
+
+For  dummies:
+Yes
+Yes
+Yes
+Yes
+Yes
+{HOSTNAME}
+No
+Local
+Automatic
+Local
+Automatic
+{password}
+Both
+No
+{Organization name for certificate}
+Yes
+Automatic
+Yes
+/var/lib/exports/iso
+*(rw)
+iso
+1
+Yes
+OK
+ 
+# vi ovirt_config.txt
+將安裝oVirt設定資訊儲存起來紀錄，讓日後可以Debug使用及查詢。
+
+Use Browser Setting
+URL: http://Hostname
