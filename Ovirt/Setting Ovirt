@@ -1,0 +1,63 @@
+#Use browser creat a host
+
+#Server
+cd /etc/exports.d/
+
+cp ovirt-engine-iso-domain.exports ovirt-engine-data-domain.exports
+#複製 ovirt-engine-iso-domain.exports 並且命名為 ovirt-engine-data-domain.exports
+
+vim ovirt-engine-iso-domain.exports
+
+#If not ovirt-engine-iso-domain.exports 
+#新增	/var/lib/exports/iso	  *(rw)
+
+vim ovirt-engine-data-domain.exports
+#更改	/var/lib/exports/data	  *(rw)
+
+cd /var/lib/exports
+mkdir data
+
+
+chown vdsm.kvm data/
+
+ls -lh
+#確認權限
+#drwxr-xr-x 2 vdsm kvm 4.0K  data
+#drwxr-xr-x 3 vdsm kvm 4.0K  iso
+
+systemctl enable nfs-server
+
+exportfs -r
+exportfs
+#確認掛載
+#/var/lib/exports/data
+#		<world>
+#/var/lib/exports/iso
+#		<world>
+
+#To ovirt web
+#PUSH Hosts
+#PUSH New
+#Name -> Hostname
+#Address -> [IP]
+#Password -> [PASSWD]  OK
+
+
+
+
+
+
+#PUSH Storage to add new data
+#PUSH New Domain
+#Name -> data
+
+rm -rf /var/lib/exports/iso/*
+
+#run storage iso&data
+
+#uploader a iso
+engine-iso-uploader list
+engine-iso-uploader --iso-domain=iso upload [file]
+
+#PUSH Disks creat a disk
+
